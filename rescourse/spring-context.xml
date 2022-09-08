@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-3.2.xsd" >
+     
+    <bean id="common.propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="fileEncoding" value="UTF-8" />
+		<property name="locations">
+		<list>
+			<value>classpath:db.properties</value>
+		</list>
+		</property>
+	</bean>
+    <!-- 配置DataSource数据源 DBCP -->
+<!--     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> -->
+<!--         <property name="driverClassName" value="${driver}" /> -->
+<!--         <property name="url" value="${url}" /> -->
+<!--         <property name="username" value="${username}" /> -->
+<!-- 		<property name="password" value="${password}" /> -->
+<!-- 		<property name="maxActive" value="${maxActive}" /> -->
+<!-- 		<property name="maxIdle" value="${maxIdle}" /> -->
+<!-- 		<property name="maxWait" value="${maxWait}" /> -->
+<!-- 		<property name="defaultAutoCommit" value="${defaultAutoCommit}" /> -->
+<!-- 		<property name="removeAbandoned" value="${removeAbandoned}" /> -->
+<!-- 		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" /> -->
+<!--     </bean> -->
+     <!-- 配置DataSource数据源 C3P0-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${driver}"/>
+		<property name="jdbcUrl" value="${url}"/>
+		<property name="user" value="${username}"/>
+		<property name="password" value="${password}"/> 
+        <property name="initialPoolSize" value="${c3p0.initialPoolSize}"/>
+		<property name="minPoolSize" value="${c3p0.minPoolSize}"/>
+		<property name="maxPoolSize" value="${c3p0.maxPoolSize}"/>
+		<property name="acquireIncrement" value="${c3p0.acquireIncrement}"/>
+		<property name="maxIdleTime" value="${c3p0.maxIdleTime}"/>
+		<property name="acquireRetryDelay" value="1000"></property>  
+        <property name="acquireRetryAttempts" value="60"></property>  
+        <property name="breakAfterAcquireFailure" value="false"></property> 
+        <property name="testConnectionOnCheckin" value="true"></property>
+        <property name="idleConnectionTestPeriod" value="10"></property>
+        <property name="numHelperThreads" value="10"></property>
+    </bean> 
+    
+   	<!-- 创建SqlSessionFactory，同时指定数据源 加载 *Mapper.xml -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>  
+        <property name="mapperLocations" value="classpath*:sqlMapper/**/*Mapper.xml"></property>  
+    </bean>
+    <!--Spring与mybatis整合配置  -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="crf.system.dao,crf.invest.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+	
+	<!-- 配置其他数据源 -->
+<!--     <bean id="dataSource1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> -->
+<!--         <property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
+<!--         <property name="url" value="jdbc:mysql://localhost:3307/crf_cs_db?characterEncoding=utf-8" /> -->
+<!--         <property name="username" value="root" /> -->
+<!-- 		<property name="password" value="root" /> -->
+<!-- 		<property name="maxActive" value="5" /> -->
+<!-- 		<property name="maxIdle" value="3" /> -->
+<!-- 		<property name="maxWait" value="1000" /> -->
+<!-- 		<property name="defaultAutoCommit" value="true" /> -->
+<!-- 		<property name="removeAbandoned" value="true" /> -->
+<!-- 		<property name="removeAbandonedTimeout" value="60" /> -->
+<!--     </bean> -->
+    <!-- 创建SqlSessionFactory1，同时指定数据源 加载 *Mapper.xml -->
+<!--     <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean"> -->
+<!--         <property name="dataSource" ref="dataSource1" /> -->
+<!--         <property name="configLocation" value="classpath:mybatis-config.xml"></property>   -->
+<!--         <property name="mapperLocations" value="classpath*:crf/**/*Mapper.xml"></property>   -->
+<!--     </bean> -->
+    <!--Spring与mybatis整合配置  -->
+<!-- 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> -->
+<!-- 		<property name="basePackage" value="crf.backstage.system.dao" /> -->
+<!-- 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1" /> -->
+<!-- 	</bean> -->
+	
+</beans>

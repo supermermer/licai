@@ -1,0 +1,79 @@
+package crf.backstage.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import crf.backstage.entity.CcardData;
+import crf.backstage.service.CcardDataService;
+import crf.backstage.system.common.CommonMethod;
+
+@Controller
+@RequestMapping("/pc_CcardDataController")
+public class CcardDataController {
+	
+	@Autowired
+	private CcardDataService ccardDataService;
+	
+	/**************************************************CcardData 增删改查***********************************/
+	/**
+	 * pad组列表Init
+	 *王浩  @2015-3-16 
+	 */
+	@RequestMapping(params="getCcardDataList")
+	public ModelAndView getCcardDataList(HttpServletRequest request) {
+		return new ModelAndView("jsp/CcardData/CcardDatalist");
+	}
+	/**
+	 * pad组列表
+	 *王浩  @2015-3-18 功能:
+	 */
+	@RequestMapping(params="queryCcardDataListTable")
+	public ModelAndView queryCcardDataListTable(HttpServletRequest request) throws Exception{
+		List<CcardData>userList=new ArrayList<CcardData>();
+		userList=ccardDataService.getCcardDataList(request);
+		ModelAndView mv = new ModelAndView("jsp/CcardData/CcardDatalist_table");
+		mv.addObject("userList", userList);
+		return mv;
+	}
+	/**
+	 *  新增或修改pad组
+	 *王浩  @2015-3-29 功能:
+	 * @throws Exception 
+	 */
+	@RequestMapping(params="addOrUpdateCcardData")
+	public String addOrUpdateCcardData(HttpServletRequest request) throws Exception{
+		ccardDataService.addOrUpdateCcardData(request);
+		return "jsp/CcardData/addOrUpdateCcardData";
+	}
+	
+	/**
+	 * 保存pad组
+	 *王浩  @2015-3-18 功能:
+	 */
+	@RequestMapping(params="saveCcardData")
+	public String saveCcardData(HttpServletRequest request,
+			@ModelAttribute("pc_ParamSetController")CcardData userInfo) throws Exception{
+		ccardDataService.saveCcardData(request,userInfo);
+		return "redirect:pc_ParamSetController.do?getCcardDataList";
+	}
+	/**
+	 * 删除pad组
+	 *王浩  @2015-3-30 功能:
+	 */
+	@RequestMapping(params="delCcardDataByNo")
+	public String delCcardDataByNo(HttpServletRequest request) throws Exception{
+		ccardDataService.delCcardDataByNo(request);
+		return "redirect:pc_ParamSetController.do?getCcardDataList";
+	}
+	
+}

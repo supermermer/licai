@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- MyBatis中可以面向接口操作数据，要保证两个一致
+mapper接口的全类名和映射文件的命名空间（namespace）保持一致
+mapper接口中方法的方法名和映射文件中编写SQL的标签的id属性保持一致-->
+<mapper namespace="crf.system.dao.SystemDao">
+
+
+
+    <!--    UserBean getUser(UserBean user);-->
+    <select id="getUser" resultType="userBean" parameterType="userBean">
+        select * from user where username=#{username} and password=#{password};
+    </select>
+
+<!--    void updateUser(UserBean user);-->
+    <select id="getUserMenu" resultType="Operation" parameterType="String">
+        select operation_no,operation_name,operation_url,parent_id from
+            operation where is_enable='1' and operation_no in
+                                              (select operation_no from actor_operation where actor_no in (
+                                                  select actor_no from actor where is_enable='1' and actor_no in
+                                                                                                     (select actor_no from user_actor where username=#{username} ) ) )
+        order by operation_seq
+    </select>
+
+    <select id="getUserParentMenu" resultType="Operation" >
+        select operation_no,operation_name from operation where operation_no in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by operation_seq
+    </select>
+
+<!--    List<UserBean> queryUserList();-->
+    <select id="queryUserList" resultType="crf.system.entity.UserBean">
+        SELECT *,(select realname from `user` WHERE  username='wanghao') as createname from user;
+    </select>
+
+<!--    //查询指定用户名的用户数目-->
+    <select id="getUserListCount" resultType="java.lang.Long" parameterType="hashmap">
+        select count(1) from `user` where 1=1
+        <!--如果用户名为空查询所有数目-->
+        <if test="username!=''">
+            and username=#{username}
+        </if>
+    </select>
+
+<!--    //分页查询指定用户名的用户列表-->
+    <select id="getUserListPage" resultType="crf.system.entity.UserBean" parameterType="hashmap">
+        SELECT *,(select realname from `user` WHERE  username='wanghao') as createname
+        from `user` where 1=1
+        <if test="username!=''">
+            and username=#{username}
+        </if>
+        <if test="pageTurn=='YES'">
+            limit #{index},#{pageNum}
+        </if>
+    </select>
+
+<!--    //得到用户信息-->
+    <select id="getUserInfo" resultType="crf.system.entity.UserBean" parameterType="string">
+        select * from user where username=#{username};
+    </select>
+
+
+    <!--    //修改用户-->
+    <update id="updateUser" parameterType="userBean">
+        update user set password=#{password},realname=#{realname},mobile=#{mobile},
+                        email=#{email},is_enable=#{is_enable} where username=#{username}
+    </update>
+
+    <!--    //保存用户-->
+    <update id="saveUser" parameterType="userBean">
+        insert into user (username,password,realname,email,mobile,is_enable,createid,createtime)
+        values (#{username},#{password},#{realname},#{email},#{mobile},#{is_enable},#{createid},#{createtime})
+    </update>
+
+
+    <!--    //得到指定角色的数量-->
+    <select id="getActorCount" resultType="java.lang.Long" parameterType="hashmap">
+        select count(1) from actor where 1=1
+        <if test="actor_name!=''">
+           and actor_name=#{actor_name}
+        </if>
+    </select>
+
+<!--    //分页查询指定角色列表-->
+    <select id="getActorPage" resultType="crf.system.entity.Actor">
+        SELECT *,(select realname from `user`  WHERE  username='wanghao') as createname
+        from actor where 1=1
+        <if test="actor_name!=''">
+            and actor_name=#{actor_name}
+        </if>
+        <if test="pageTurn=='YES'">
+            limit #{index},#{pageNum}
+        </if>
+    </select>
+
+<!--    //得到指定角色的信息-->
+    <select id="getActorInfo" resultType="crf.system.entity.Actor" parameterType="string">
+        select * from actor where actor_no=#{actor_no};
+    </select>
+
+
+    <!--    //修改角色-->
+    <update id="updateActor" parameterType="crf.system.entity.Actor">
+        update actor set actor_no=#{actor_no},actor_name=#{actor_name},actor_desc=#{actor_desc},
+                         is_enable=#{is_enable} where actor_no=#{actor_no};
+    </update>
+
+<!--    //保存角色-->
+    <update id="saveActor" parameterType="actor">
+        INSERT INTO actor (actor_no,actor_name,actor_desc,is_enable,createid,createtime) VALUES
+        (#{actor_no},#{actor_name},#{actor_desc},#{is_enable},#{createid},#{createtime});
+    </update>
+
+
+    <!--    //查询当前可用的所有的操作-->
+    <select id="getOperationList" resultType="crf.system.entity.Operation">
+        SELECT * from operation WHERE is_enable='1' ORDER BY operation_seq;
+    </select>
+<!--    //根据actor_no，遍历当前角色可以使用的操作-->
+    <select id="getOperationByActorNo" resultType="java.lang.String" parameterType="string">
+        SELECT operation_no from actor_operation WHERE actor_no=#{actor_no};
+    </select>
+
+
+    <!--    先删除对应actor_no 的操作-->
+    <delete id="deleteAcOpByactorno" parameterType="string">
+        delete from actor_operation where actor_no=#{actor_no};
+    </delete>
+<!--    //删除指定username 的角色-->
+    <delete id="deleteUserByUsername" parameterType="string">
+        DELETE FROM user_actor WHERE username=#{username};
+    </delete>
+
+    <!--    //保存角色修改-->
+    <update id="saveActorOperation" parameterType="map">
+        INSERT INTO actor_operation() VALUES (#{actor_no},#{operation_no});
+    </update>
+
+<!--    //查询当前所有可用的角色-->
+    <select id="getAllActorList" resultType="crf.system.entity.Actor">
+        SELECT * FROM actor WHERE is_enable='1'
+    </select>
+
+    <!--    //根据username获取，对应的角色-->
+    <select id="getActorByUsername" resultType="java.lang.String">
+        SELECT actor_no from user_actor WHERE username=#{username}
+    </select>
+
+    <insert id="saveUserActor" parameterType="hashmap">
+        INSERT INTO user_actor() VALUES(#{username},#{actor_no});
+    </insert>
+</mapper>

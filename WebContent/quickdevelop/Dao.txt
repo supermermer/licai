@@ -1,0 +1,15 @@
+package crf.backstage.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import crf.backstage.entity.CcardData;
+
+public interface CcardDataDao {
+	public long getCcardDataListCount(Map<String,Object> map);
+	public List<CcardData> getCcardDataList(Map<String,Object>map);
+	public CcardData getCcardDataInfo(String CcardData_no);
+	public void updateCcardData(CcardData userInfo);
+	public void insertCcardData(CcardData userInfo);
+	public void delCcardDataByNo(String CcardData_no);
+}

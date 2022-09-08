@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="crf.backstage.dao.CcardDataDao">
+
+   
+   <!-- CcardData -->
+   <select id="getCcardDataListCount" resultType="Long" parameterType="hashmap">
+   		select count(1) From CcardData where 1=1
+   		<if test="sd_c1_cname!=''"> and sd_c1_cname=#{sd_c1_cname} </if> 
+   </select>
+   <!-- 取得CcardData列表  -->
+   <select id="getCcardDataList" resultType="CcardData" parameterType="hashmap">
+		select A.*,
+		(select group_name from padgroup where group_no=(select group_no from paduser where padUname=A.paduser)) as group_name
+  			from ccarddata A where 1=1
+ 		<if test="sd_c1_cname!=''"> and a.sd_c1_cname=#{sd_c1_cname} </if> 
+			order by a.id desc
+ 		<if test="pageTurn=='YES'">limit #{index},#{pageNum}</if>
+   </select>
+   <!-- 根据权限编号获取权限-->
+   <select id="getCcardDataInfo" resultType="CcardData" parameterType="String">
+   		select * From CcardData where CcardData_no=#{CcardData_no}
+   </select>
+    <!-- 修改权限-->
+   <select id="updateCcardData"  resultType="CcardData" parameterType="CcardData">
+   		update CcardData set CcardData_name=#{CcardData_name},CcardData_url=#{CcardData_url},
+   			CcardData_seq=#{CcardData_seq},is_enable=#{is_enable},parent_id=#{parent_id} 
+   			where CcardData_no=#{CcardData_no}
+   </select>
+   <!-- 新增权限-->
+   <select id="insertCcardData"  parameterType="CcardData">
+   		insert into CcardData (CcardData_no,CcardData_name,CcardData_url,CcardData_seq,is_enable,parent_id)
+   			values (#{CcardData_no},#{CcardData_name},#{CcardData_url},#{CcardData_seq},#{is_enable},#{parent_id})
+   </select>
+    <!-- 删除权限-->
+   <select id="delCcardDataByNo"  parameterType="String">
+   		delete from CcardData where CcardData_no=#{CcardData_no}
+   </select>	
+   
+</mapper>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

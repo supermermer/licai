@@ -1,0 +1,14 @@
+package crf.backstage.service;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import crf.backstage.entity.CcardData;
+
+public interface CcardDataService {
+	public List<CcardData> getCcardDataList(HttpServletRequest request)throws Exception;
+	public boolean addOrUpdateCcardData(HttpServletRequest request)throws Exception;
+	public boolean saveCcardData(HttpServletRequest request,CcardData userInfo)throws Exception;
+	public boolean delCcardDataByNo(HttpServletRequest request) throws Exception;
+}

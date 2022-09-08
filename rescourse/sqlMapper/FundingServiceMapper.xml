@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="crf.invest.dao.FundingServiceDao">
+    <resultMap id="fundResultMap" type="crf.invest.entity.Funding">
+        <id column="fund_id" property="fundId" jdbcType="NUMERIC"/>
+        <result column="fund_f_user_id" property="fundFUserId" jdbcType="NUMERIC"/>
+        <result column="fund_f_pro_id" property="fundFProId" jdbcType="NUMERIC"/>
+        <result column="fund_f_ubc_id" property="fundFUbcId" jdbcType="NUMERIC"/>
+        <result column="fund_seq" property="fundSeq" jdbcType="VARCHAR"/>
+        <result column="fund_money" property="fundMoney" jdbcType="VARCHAR"/>
+        <result column="fund_source" property="fundSource" jdbcType="VARCHAR"/>
+        <result column="fund_create_time" property="fundCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="fund_state" property="fundState" jdbcType="VARCHAR"/>
+        <result column="fund_frost_time" property="fundFrostTime" jdbcType="TIMESTAMP"/>
+        <result column="fund_fuiou_mchnt_txn_ssn" property="fundFuiouMchntTxnSsn" jdbcType="VARCHAR"/>
+        <result column="fund_fuiou_contract_no" property="fundFuiouContractNo" jdbcType="VARCHAR"/>
+        <result column="fund_req_state" property="fundReqState" jdbcType="VARCHAR"/>
+        <result column="fund_deduct_time" property="fundDeductTime" jdbcType="TIMESTAMP"/>
+        <result column="fund_channel" property="fundChannel" jdbcType="VARCHAR"/>
+        <result column="fund_begin_date" property="fundBeginDate" jdbcType="TIMESTAMP"/>
+        <result column="fund_end_date" property="fundEndDate" jdbcType="TIMESTAMP"/>
+        <result column="fund_hold_days" property="fundHoldDays" jdbcType="INTEGER"/>
+        <result column="fund_close_income" property="fundCloseIncome" jdbcType="VARCHAR"/>
+        <result column="fund_total_income" property="fundTotalIncome" jdbcType="VARCHAR"/>
+        <result column="fund_fetch_time" property="fundFetchState" jdbcType="TIMESTAMP"/>
+        <result column="fund_fetch_state" property="fundFetchTime" jdbcType="TIMESTAMP"/>
+        <result column="pro_name" property="fundProName" jdbcType="VARCHAR"/>
+        <result column="user_phone_no" property="fundPhoneNo" jdbcType="VARCHAR"/>
+        <result column="user_name" property="fundName" jdbcType="VARCHAR"/>
+        <result column="user_id_card" property="fundIdCard" jdbcType="VARCHAR"/>
+    </resultMap>
+
+<!--    //得到OBList表的总数量-->
+    <select id="getObListCount" resultType="java.lang.Long">
+        SELECT COUNT(1) FROM fm_funding as fd
+            LEFT JOIN fm_user as fu on fd.fund_f_user_id=fu.user_id
+            LEFT JOIN fm_product as fp on fd.fund_f_pro_id=fp.pro_id where  1=1
+            <include refid="getObListCountSql"/>
+    </select>
+
+    <sql id="getObListCountSql">
+        <if test="fundPhoneNo!=''">
+            and fu.user_phone_no=#{fundPhoneNo}
+        </if>
+        <if test="startTime!=''">
+            and fd.fund_create_time <![CDATA[>=]]> #{startTime}
+        </if>
+        <if test="endTime!=''">
+            and fd.fund_create_time <![CDATA[<=]]> #{endTime}
+        </if>
+    </sql>
+<!--    //分页查询所有的OBList的信息-->
+    <select id="getObList" resultMap="fundResultMap">
+        SELECT  fd.fund_id,fu.user_name,fu.user_phone_no,fu.user_id_card,fp.pro_name,fd.fund_money,fd.fund_create_time,fd.fund_state FROM fm_funding as fd
+        LEFT JOIN fm_user as fu on fd.fund_f_user_id=fu.user_id
+        LEFT JOIN fm_product as fp on fd.fund_f_pro_id=fp.pro_id where  1=1
+        <include refid="getObListCountSql"/>
+        <if test="pageTurn=='YES'">
+            limit #{index},#{pageNum}
+        </if>
+    </select>
+
+<!--    //获取所有金额-->
+    <select id="getSumMoney" resultType="java.lang.Double">
+        SELECT sum(fd.fund_money) FROM fm_funding as fd
+        LEFT JOIN fm_user as fu on fd.fund_f_user_id=fu.user_id
+        LEFT JOIN fm_product as fp on fd.fund_f_pro_id=fp.pro_id where  1=1
+        <include refid="getObListCountSql"/>
+    </select>
+
+
+<!--    //得到出资表的总数量-->
+    <select id="getFundingListCount" resultType="java.lang.Long">
+        SELECT COUNT(1) FROM fm_funding as fd
+            LEFT JOIN fm_user as fu on fd.fund_f_user_id=fu.user_id
+            LEFT JOIN fm_product as fp on fd.fund_f_pro_id=fp.pro_id where  1=1
+            <include refid="getFundingListCountSql"/>
+    </select>
+<!--    //分页查询所有的出资List的信息-->
+    <select id="getFundingList" resultMap="fundResultMap">
+        SELECT fd.fund_id,fu.user_name,fu.user_phone_no,fp.pro_name,fd.fund_money,fd.fund_create_time,
+               fd.fund_state,fd.fund_frost_time,fd.fund_deduct_time,fd.fund_req_state
+        FROM fm_funding as fd LEFT JOIN fm_user as fu on fd.fund_f_user_id=fu.user_id
+                              LEFT JOIN fm_product as fp on fd.fund_f_pro_id=fp.pro_id
+        WHERE 1=1 <include refid="getFundingListCountSql"/>
+        <if test="pageTurn=='YES'">
+            limit #{index},#{pageNum}
+        </if>
+    </select>
+<!--    //获取出资所有金额-->
+    <select id="getFundingSumMoney" resultType="java.lang.Double">
+        SELECT sum(fd.fund_money) FROM fm_funding as fd
+           LEFT JOIN fm_user as fu on fd.fund_f_user_id=fu.user_id
+           LEFT JOIN fm_product as fp on fd.fund_f_pro_id=fp.pro_id where  1=1
+        <include refid="getFundingListCountSql"/>
+    </select>
+    <sql id="getFundingListCountSql">
+        <if test="fundPhoneNo!=''">
+            and fu.user_phone_no=#{fundPhoneNo}
+        </if>
+        <if test="fundState!=''">
+            and fd.fund_state=#{fundState}
+        </if>
+        <if test="fundReqState!=''">
+            and fd.fund_req_state=#{fundReqState}
+        </if>
+        <if test="fundName!=''">
+            and fu.user_name=#{fundName}
+        </if>
+        <if test="startTime!=''">
+            and fd.fund_create_time <![CDATA[>=]]> #{startTime}
+        </if>
+        <if test="endTime!=''">
+            and fd.fund_create_time <![CDATA[<=]]> #{endTime}
+        </if>
+        <if test="freezeStartTime!=''">
+            and fd.fund_frost_time <![CDATA[>=]]> #{freezeStartTime}
+        </if>
+        <if test="freezeEndTime!=''">
+            and fd.fund_frost_time <![CDATA[<=]]> #{freezeEndTime}
+        </if>
+        <if test="uploadStartTime!=''">
+            and fd.fund_deduct_time <![CDATA[>=]]> #{uploadStartTime}
+        </if>
+        <if test="uploadEndTime!=''">
+            and fd.fund_deduct_time <![CDATA[<=]]> #{uploadEndTime}
+        </if>
+    </sql>
+</mapper>
