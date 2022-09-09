@@ -15,6 +15,7 @@
 <form name="form0" class="form-inline definewidth m20" 
 		action="pc_SystemController.do?queryUserListTable" method="post">
 <table  align="center" border="0" class="q-cls">
+
 	<tr>
 		<td width="6%" align="right">用户名:</td>
 		<td width="10%" align="left"><input style="width: 150px;" type="text"  name="username"></td>
