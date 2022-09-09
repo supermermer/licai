@@ -7,7 +7,6 @@ import crf.system.entity.Operation;
 import crf.system.entity.UserBean;
 import crf.system.service.SystemService;
 import crf.system.taglib.PageTag;
-import javafx.scene.control.Alert;
 import org.apache.ibatis.logging.log4j.Log4jImpl;
 import org.slf4j.Logger;
 import org.slf4j.helpers.NOPLogger;
