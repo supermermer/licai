@@ -9,4 +9,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface AccountService {
     void queryAccountListTable(HttpServletRequest request);
+
+    void updateUploadStatus(HttpServletRequest request);
 }

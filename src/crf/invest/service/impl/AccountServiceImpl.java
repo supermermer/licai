@@ -2,12 +2,14 @@ package crf.invest.service.impl;
 
 import crf.common.CommonMethod;
 import crf.invest.dao.AccountDao;
+import crf.invest.entity.Account;
 import crf.invest.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,5 +62,31 @@ public class AccountServiceImpl implements AccountService {
 
         //得到开户表的总数量
         Long total=dao.getAccountListCount(map);
+        //分页准备
+        CommonMethod.setPageInfo(request,request.getParameter("currentPage"),total,
+                request.getParameter("pageTurn"),map);
+        //获取开户列表的成员信息
+        List<Account> list=dao.getAccountList(map);
+        //account_list_table.jsp 添加参数
+        request.setAttribute("list",list);
+    }
+
+    /**
+     * @Author yang
+     * @Description //TODO 更新开户的重新上传
+     * @Date 13:46 2022/9/9
+     * @Param [request]
+     * @return 
+     **/
+    @Override
+    public void updateUploadStatus(HttpServletRequest request) {
+        String selectlist= request.getParameter("selectlist");
+        //如果传入的参数不为空，则进行更新
+        if(selectlist!=null||selectlist.length()!=0){
+            String[] strings = selectlist.split(",");
+            for (String select:strings){
+                dao.updateUploadStatus(select);
+            }
+        }
     }
 }

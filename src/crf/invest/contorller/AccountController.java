@@ -43,4 +43,18 @@ public class AccountController {
         service.queryAccountListTable(request);
         return "Account/account_list_table";
     }
+
+    /**
+     * @Author yang
+     * @Description //TODO 开户的重新上传
+     * @Date 13:45 2022/9/9
+     * @Param
+     * @return
+     **/
+//     "accountController.do?updateUploadStatus&selectlist="+selectlist
+    @RequestMapping(params = "updateUploadStatus")
+    public String updateUploadStatus(HttpServletRequest request){
+        service.updateUploadStatus(request);
+        return "redirect:accountController.do?queryAccountList";
+    }
 }
