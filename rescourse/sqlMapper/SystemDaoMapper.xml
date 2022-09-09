@@ -7,8 +7,6 @@ mapper接口的全类名和映射文件的命名空间（namespace）保持一�
 mapper接口中方法的方法名和映射文件中编写SQL的标签的id属性保持一致-->
 <mapper namespace="crf.system.dao.SystemDao">
 
-
-
     <!--    UserBean getUser(UserBean user);-->
     <select id="getUser" resultType="userBean" parameterType="userBean">
         select * from user where username=#{username} and password=#{password};

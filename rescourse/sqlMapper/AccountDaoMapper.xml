@@ -4,7 +4,63 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="crf.invest.dao.AccountDao">
+    <resultMap id="Account" type="crf.invest.entity.Account">
+        <id column="account_id" property="accountId" jdbcType="NUMERIC"></id>
+        <result column="account_f_user_id" property="accountFUserId" jdbcType="NUMERIC"></result>
+        <result column="account_f_ubc_id" property="accountFUbcId" jdbcType="NUMERIC"></result>
+        <result column="account_name" property="accountName" jdbcType="VARCHAR"></result>
+        <result column="account_id_no" property="accountIdNo" jdbcType="VARCHAR"></result>
+        <result column="account_phone_no" property="accountPhoneNo" jdbcType="VARCHAR"></result>
+        <result column="account_card_no" property="accountCardNo" jdbcType="VARCHAR"></result>
+        <result column="account_seq" property="accountSeq" jdbcType="VARCHAR"></result>
+        <result column="account_channel" property="accountChannel" jdbcType="VARCHAR"></result>
+        <result column="account_login_pass" property="accountLoginPass" jdbcType="VARCHAR"></result>
+        <result column="account_pay_pass" property="accountPayPass" jdbcType="VARCHAR"></result>
+        <result column="account_is_success" property="accountIsSuccess" jdbcType="VARCHAR"></result>
+        <result column="account_create_time" property="accountCreateTime" jdbcType="TIMESTAMP"></result>
+        <result column="account_is_upload" property="accountIsUpload" jdbcType="VARCHAR"></result>
+        <result column="account_upload_time" property="accountUploadTime" jdbcType="TIMESTAMP"></result>
+        <result column="PARENT_ID" property="accountProvinceCode" jdbcType="VARCHAR"></result>
+        <result column="NODE_NO" property="accountCityCode" jdbcType="VARCHAR"></result>
+        <result column="bank_code" property="accountBankCode" jdbcType="VARCHAR"></result>
+    </resultMap>
+    <update id="updateUploadStatus">
+        UPDATE  fm_account SET account_is_upload='1' WHERE account_id=#{select}
+    </update>
 
-<!--    //得到开户表的总数量-->
-    <select id="getAccountListCount" resultType="java.lang.Long"></select>
+    <!--    //得到开户表的总数量-->
+    <select id="getAccountListCount" resultType="java.lang.Long">
+        SELECT COUNT(1) FROM fm_account fa WHERE 1=1
+        <include refid="fm_account_sql"/>
+    </select>
+<!--    //获取开户列表的成员信息-->
+    <select id="getAccountList" resultMap="Account">
+        SELECT * FROM fm_account fa WHERE 1=1
+        <include refid="fm_account_sql"/>
+        <if test="pageTurn=='YES'">
+            limit #{index},#{pageNum}
+        </if>
+    </select>
+    <sql id="fm_account_sql">
+        <if test="accountPhoneNo !=''">
+            AND fa.account_phone_no =#{accountPhoneNo}
+        </if>
+        <if test="accountIsUpload !=''">
+            AND fa.account_is_upload =#{accountIsUpload}
+        </if>
+        <if test="accountIsSuccess !=''">
+            AND fa.account_is_success =#{accountIsSuccess}
+        </if>
+        <if test="accountName !=''">
+            AND fa.account_name =#{accountName}
+        </if>
+        <if test="startTime!=''">
+            and fa.account_create_time <![CDATA[>=]]> #{startTime}
+        </if>
+        <if test="endTime!=''">
+            and fa.account_create_time <![CDATA[<=]]> #{endTime}
+        </if>
+    </sql>
+
+
 </mapper>
