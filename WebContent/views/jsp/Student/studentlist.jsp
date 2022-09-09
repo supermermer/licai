@@ -13,43 +13,41 @@
 </head>
 <body>
 <form name="form0" class="form-inline definewidth m20" 
-		action="pc_SystemController.do?queryUserListTable" method="post">
+		action="studentController.do?queryStudentListTable" method="post">
 <table  align="center" border="0" class="q-cls">
 
 	<tr>
 		<td width="6%" align="right">用户名:</td>
 		<td width="10%" align="left"><input style="width: 150px;" type="text"  name="username"></td>
 		<td width="6%" align="right">真实姓名:</td>
-		<td width="10%" align="left"><input style="width: 150px;" type="text"  name="username"></td>
+		<td width="10%" align="left"><input style="width: 150px;" type="text"  name="realname"></td>
 		<td width="7%" align="right">邮箱:</td>
-		<td width="8%" align="left"><input style="width: 200px;" type="text"  name="fundPhoneNo"></td>
+		<td width="8%" align="left"><input style="width: 200px;" type="text"  name="phone"></td>
 	</tr>
 	<tr>
-		<td width="7%" align="right">出资时间:</td>
+		<td width="7%" align="right">创建时间:</td>
 		<td width="8%" align="left"><input  class="Wdate" type="text" onClick="WdatePicker()"  name="startTime"></td>
 		<td width="7%" align="right">至:</td>
 		<td width="8%" align="left"><input  class="Wdate" type="text" onClick="WdatePicker()" name="endTime"></td>
-		<td width="7%" align="right">姓名:</td>
-		<td width="8%" align="left" ><input style="width: 200px;" type="text"  name="fundName"></td>
 	</tr>
 	<tr>
 		<td align="right" style="padding-right: 2%">
 			<button type="button" onclick="query();" class="btn btn-primary">查询</button>
-			<button type="button" class="btn btn-success" onclick="addUser();">新增用户</button>
+			<button type="button" class="btn btn-success" onclick="addUser();">添加学生</button>
 		</td>
 	</tr>
 </table>
-<tyTag:page tarFrame="frame1" method="pc_SystemController.do?queryUserListTable" pageTurn="<%=PageUtil.TURN_YES %>"></tyTag:page>
+<tyTag:page tarFrame="frame1" method="studentController.do?queryStudentListTable" pageTurn="<%=PageUtil.TURN_YES %>"></tyTag:page>
 </form>
 </body>
     <script type="text/javascript">
     	function query(){
-    		document.forms[0].action = "pc_SystemController.do?queryUserListTable";
+    		document.forms[0].action = "studentController.do?queryStudentListTable";
     		document.forms[0].target="frame1";
     		document.forms[0].submit();
     	}
     	function addUser(){
-    		window.location.href="pc_SystemController.do?addOrUpdateUser&flag=add";
+    		window.location.href="studentController.do?addOrUpdateStudent&flag=add";
     	}
     </script>
 </html>
