@@ -6,21 +6,44 @@
 mapper接口的全类名和映射文件的命名空间（namespace）保持一致
 mapper接口中方法的方法名和映射文件中编写SQL的标签的id属性保持一致-->
 <mapper namespace="crf.invest.dao.StudentDao">
-
+<!--    保存新增的用户-->
+    <insert id="saveStudent" parameterType="student">
+        insert into student()
+         values (null ,#{username},#{realname},#{phone},#{email},#{createtime},#{password},#{is_delete})
+    </insert>
+    <!--    //根据id，修改用户信息-->
+    <update id="updateStudent" parameterType="student">
+        update student set password=#{password},realname=#{realname},phone=#{phone},
+                           email=#{email},is_delete=#{is_delete},username=#{username}
+                    where student_id =#{student_id}
+    </update>
+<!--    逻辑删除学生信息 将is_delete设置为1-->
+    <delete id="deleteStudent" parameterType="hashmap">
+        update student set is_delete=1 where username=#{username} and realname=#{realname}
+    </delete>
+    <!--    得到学生的总数量-->
     <select id="getStudentListCount" resultType="java.lang.Long">
         select count(1) from student where 1=1
         <include refid="studentSql"/>
     </select>
+<!--    分页查询学生列表-->
     <select id="getStudentList" resultType="crf.invest.entity.Student">
         select * from student where 1=1
         <include refid="studentSql"/>
+        <if test="pageTurn=='YES'">
+            limit #{index},#{pageNum}
+        </if>
+    </select>
+<!--    得到学生的信息-->
+    <select id="getStudentInfo" resultType="crf.invest.entity.Student">
+        select * from student where username=#{username} and is_delete='0'
     </select>
     <sql id="studentSql">
         <if test="username !=''">
-            AND username =#{username}
+            AND username like '%${username}%'
         </if>
         <if test="realname !=''">
-            AND realname =#{realname}
+            AND realname like '%${realname}%'
         </if>
         <if test="phone !=''">
             AND phone=#{phone}
@@ -31,5 +54,6 @@ mapper接口中方法的方法名和映射文件中编写SQL的标签的id属性
         <if test="endTime!=''">
             and createtime <![CDATA[<=]]> #{endTime}
         </if>
+            and is_delete='0'
     </sql>
 </mapper>

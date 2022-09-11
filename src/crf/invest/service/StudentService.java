@@ -1,5 +1,7 @@
 package crf.invest.service;
 
+import crf.invest.entity.Student;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -9,4 +11,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface StudentService {
     void queryStudentListTable(HttpServletRequest request);
+
+    void addOrUpdateStudent(HttpServletRequest request);
+
+    void saveUser(HttpServletRequest request, Student student);
+
+    void deleteStudent(HttpServletRequest request);
 }

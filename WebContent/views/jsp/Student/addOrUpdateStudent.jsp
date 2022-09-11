@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="<%=request.getContextPath() %>/views/Js/checkForm.js"></script>
     <script type="text/javascript">
     	function returnList(){
-    		window.location.href="pc_SystemController.do?getUserList";
+    		window.location.href="studentController.do?studentList";
     	}
     	function init(flag){
     		if(flag=="add"){
@@ -40,13 +40,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </script>
 </head>
 <body onload="init('${flag}');">
-<form name="form0" action="pc_SystemController.do?saveUser" method="post" class="definewidth m20">
-<input type="hidden" name="is_enable" value="${user.is_enable}" />
+<form name="form0" action="studentController.do?saveUser" method="post" class="definewidth m20">
+<input type="hidden" name="is_delete" value="${user.is_delete}" />
+<input type="hidden" name="student_id" value="${user.student_id}" />
 <input type="hidden" name="flag" value="${flag}">
     <table class="table table-bordered table-hover definewidth m10">
         <tr>
             <td style="width: 20%;" class="tableleft">用户名</td>
-            <td><input type="text" name="username" value="${user.username}" title="用户名" isneed="Y" length="6~16" readonly="readonly"/></td>
+            <td><input type="text" name="username" value="${user.username}" title="用户名" isneed="Y" length="6~16" /></td>
         </tr>
         <tr>
             <td class="tableleft">密码</td>
@@ -62,7 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </tr>
         <tr>
             <td class="tableleft">手机</td>
-            <td><input type="text" title="手机" name="mobile" value="${user.mobile}" isneed="Y" length="11" checkType="number"  /></td>
+            <td><input type="text" title="手机" name="phone" value="${user.phone}" isneed="Y" length="11" checkType="number"  /></td>
         </tr>
         <tr>
             <td class="tableleft">邮箱</td>

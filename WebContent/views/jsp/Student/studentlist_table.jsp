@@ -24,7 +24,7 @@
 		}
 	}
 	function allotRoles(username,realname){
-		window.parent.location.href="studentController.do?allotRoles&username="+username+"&realname="+realname;
+		window.parent.location.href="studentController.do?deleteStudent&username="+username+"&realname="+realname;
 	}
 </script>
 <body onload="initParentFrameHeight();">
@@ -48,7 +48,7 @@
            <td>${user.createtime }</td>
            <td>
                <a href="javascript:void('0');" onclick="updateUser('${user.username}');">编辑</a>
-               <a href="javascript:void('0');" onclick="allotRoles('${user.username}','${user.realname }');">分配角色</a>     
+               <a href="javascript:void('0');" onclick="allotRoles('${user.username}','${user.realname }');">删除</a>
            </td>
        </tr>
       </c:forEach>	

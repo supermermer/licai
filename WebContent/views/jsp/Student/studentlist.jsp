@@ -21,7 +21,7 @@
 		<td width="10%" align="left"><input style="width: 150px;" type="text"  name="username"></td>
 		<td width="6%" align="right">真实姓名:</td>
 		<td width="10%" align="left"><input style="width: 150px;" type="text"  name="realname"></td>
-		<td width="7%" align="right">邮箱:</td>
+		<td width="7%" align="right">电话号:</td>
 		<td width="8%" align="left"><input style="width: 200px;" type="text"  name="phone"></td>
 	</tr>
 	<tr>
