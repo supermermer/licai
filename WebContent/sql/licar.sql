@@ -11,7 +11,7 @@
  Target Server Version : 50713
  File Encoding         : 65001
 
- Date: 08/09/2022 22:15:24
+ Date: 11/09/2022 16:56:30
 */
 
 SET NAMES utf8mb4;
@@ -90,19 +90,6 @@ INSERT INTO `actor_operation` VALUES ('normal', '0103');
 INSERT INTO `actor_operation` VALUES ('normal', '0104');
 INSERT INTO `actor_operation` VALUES ('normal', '0105');
 INSERT INTO `actor_operation` VALUES ('normal', '0106');
-INSERT INTO `actor_operation` VALUES ('admin', '0101');
-INSERT INTO `actor_operation` VALUES ('admin', '0102');
-INSERT INTO `actor_operation` VALUES ('admin', '0103');
-INSERT INTO `actor_operation` VALUES ('admin', '0104');
-INSERT INTO `actor_operation` VALUES ('admin', '0105');
-INSERT INTO `actor_operation` VALUES ('admin', '0106');
-INSERT INTO `actor_operation` VALUES ('admin', '0301');
-INSERT INTO `actor_operation` VALUES ('admin', '0302');
-INSERT INTO `actor_operation` VALUES ('admin', '0201');
-INSERT INTO `actor_operation` VALUES ('admin', '0202');
-INSERT INTO `actor_operation` VALUES ('admin', '0203');
-INSERT INTO `actor_operation` VALUES ('admin', '0204');
-INSERT INTO `actor_operation` VALUES ('admin', '0205');
 INSERT INTO `actor_operation` VALUES ('ceshi', '0302');
 INSERT INTO `actor_operation` VALUES ('101', '0301');
 INSERT INTO `actor_operation` VALUES ('101', '0302');
@@ -136,6 +123,20 @@ INSERT INTO `actor_operation` VALUES ('jjjj', '0202');
 INSERT INTO `actor_operation` VALUES ('jjjj', '0203');
 INSERT INTO `actor_operation` VALUES ('jjjj', '0204');
 INSERT INTO `actor_operation` VALUES ('jjjj', '0205');
+INSERT INTO `actor_operation` VALUES ('admin', '0301');
+INSERT INTO `actor_operation` VALUES ('admin', '0302');
+INSERT INTO `actor_operation` VALUES ('admin', '0201');
+INSERT INTO `actor_operation` VALUES ('admin', '0202');
+INSERT INTO `actor_operation` VALUES ('admin', '0203');
+INSERT INTO `actor_operation` VALUES ('admin', '0204');
+INSERT INTO `actor_operation` VALUES ('admin', '0205');
+INSERT INTO `actor_operation` VALUES ('admin', '0101');
+INSERT INTO `actor_operation` VALUES ('admin', '0102');
+INSERT INTO `actor_operation` VALUES ('admin', '0103');
+INSERT INTO `actor_operation` VALUES ('admin', '0104');
+INSERT INTO `actor_operation` VALUES ('admin', '0105');
+INSERT INTO `actor_operation` VALUES ('admin', '0106');
+INSERT INTO `actor_operation` VALUES ('admin', '0108');
 
 -- ----------------------------
 -- Table structure for dim_node
@@ -2401,7 +2402,7 @@ CREATE TABLE `fm_account`  (
 -- Records of fm_account
 -- ----------------------------
 INSERT INTO `fm_account` VALUES (25, 6160, 14, 'M81150618172345223000001', '张杰', '370923198704100653', '18813130608', '6222020200031875507', '1', '111111', '111111', '1', '2015-06-18 17:23:46', '0102', '1000', '1', '2015-06-18 17:23:46');
-INSERT INTO `fm_account` VALUES (26, 6154, 15, 'M81150618173254839000001', '王浩', '110228190001010810', '18310550015', '6222020200090700015', '1', '123456', '123456', '1', '2015-06-18 17:31:30', '0102', '1000', '2', '2015-06-18 17:31:30');
+INSERT INTO `fm_account` VALUES (26, 6154, 15, 'M81150618173254839000001', '王浩', '110228190001010810', '18310550015', '6222020200090700015', '1', '123456', '123456', '1', '2015-06-18 17:31:30', '0102', '1000', '1', '2015-06-18 17:31:30');
 INSERT INTO `fm_account` VALUES (27, 6163, 16, 'M81150618173606909000004', '王浩', '110228190001010554', '18310550016', '6222020200090700016', '1', '123456', '123456', '1', '2015-06-18 17:34:41', '0102', '1000', '1', '2015-06-18 17:34:41');
 INSERT INTO `fm_account` VALUES (29, 6141, NULL, 'M81150618174638875000001', '歼击机', '130921190001011933', '13651099898', '6222020200090700015', '1', '123456', '123456', '1', '2015-06-18 17:46:39', '0102', '1000', '1', '2015-06-25 14:23:07');
 INSERT INTO `fm_account` VALUES (30, 6141, 17, 'M81150618175203978000001', '风景', '130921190001011837', '13651099898', '6222020200090710002', '1', '123456', '123456', '1', '2015-06-18 17:52:04', '0102', '1000', '1', '2015-06-18 17:52:04');
@@ -2416,7 +2417,7 @@ INSERT INTO `fm_account` VALUES (49, 6155, 21, 'M81150619103310322000001', '王�
 INSERT INTO `fm_account` VALUES (51, 6176, 22, 'M81150623093346425000024', '赵小敏', '123456198903036688', '15652866160', '6222020200970055991', '1', '123456', '123456', '1', '2015-06-23 09:33:49', '0102', '1000', '1', '2015-06-23 09:33:49');
 INSERT INTO `fm_account` VALUES (52, 6182, NULL, 'M81150623174602344000084', '李袁', '510102196301237497', '13825260892', '6210817200005444334', '1', '630123', '261899', '1', '2015-06-23 17:46:02', '0102', '1000', '1', '2015-06-25 14:23:47');
 INSERT INTO `fm_account` VALUES (54, 6182, 23, 'M81150623184258589000086', '李袁', '510102196301237497', '13825260892', '6212260200060930028', '1', '630123', '940326', '1', '2015-06-23 18:42:59', '0102', '1000', '1', '2015-06-23 18:42:59');
-INSERT INTO `fm_account` VALUES (56, 6183, NULL, 'M81150625111418823000016', '陈仕勤', '445281198111091219', '13601702682', '6217100212001219368', '1', '123456', '123456', '0', '2015-06-25 11:14:19', '0102', '1000', '2', NULL);
+INSERT INTO `fm_account` VALUES (56, 6183, NULL, 'M81150625111418823000016', '陈仕勤', '445281198111091219', '13601702682', '6217100212001219368', '1', '123456', '123456', '0', '2015-06-25 11:14:19', '0102', '1000', '1', NULL);
 INSERT INTO `fm_account` VALUES (57, 6156, NULL, 'M81150625174206456000025', '胡华', '430624198010235123', '18002206359', '12345678901234', '1', '123456', '000000', '0', '2015-06-25 17:42:06', '0102', '1000', '1', NULL);
 INSERT INTO `fm_account` VALUES (58, 6156, NULL, 'M81150625175019062000026', '胡华', '430624198010235123', '18002206359', '6227003324100103120', '1', '111111', '111111', '0', '2015-06-25 17:50:19', '0102', '1000', '1', NULL);
 INSERT INTO `fm_account` VALUES (59, 6156, 24, 'M81150625175345755000027', '胡美华', '430624198801019988', '18002206359', '6222020200000788888', '1', '123456', '123456', '1', '2015-06-25 17:53:48', '0102', '1000', '1', '2015-06-25 17:53:48');
@@ -4433,7 +4434,7 @@ CREATE TABLE `operation`  (
   `createtime` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `operation_no`(`operation_no`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of operation
@@ -4456,6 +4457,29 @@ INSERT INTO `operation` VALUES (19, '0302', '富友日志', 'settlementControlle
 INSERT INTO `operation` VALUES (20, '0303', '核心日志', '', '003003', '0', '03', 'wanghao', '2015-07-16 18:10:48');
 INSERT INTO `operation` VALUES (21, '0106', ' 考核1', 'withdrawController.do?query', '001006', '1', '01', 'wanghao', '2017-06-07 14:58:29');
 INSERT INTO `operation` VALUES (23, '0107', '考核2', 'withdrawController.do?query', '001007', '1', '01', 'wanghao', '2021-12-22 11:04:55');
+INSERT INTO `operation` VALUES (24, '0108', '学生列表', 'studentController.do?studentList', '001008', '1', '01', 'wanghao', '2021-12-22 11:04:55');
+
+-- ----------------------------
+-- Table structure for student
+-- ----------------------------
+DROP TABLE IF EXISTS `student`;
+CREATE TABLE `student`  (
+  `student_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '学生编号',
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生用户名',
+  `realname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生真实姓名',
+  `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生电话',
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生邮箱',
+  `createtime` datetime(0) NULL DEFAULT NULL COMMENT '学生创建时间',
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生密码',
+  `is_delete` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否被删除，逻辑删除 0表示未删除 1表示已经删除',
+  PRIMARY KEY (`student_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of student
+-- ----------------------------
+INSERT INTO `student` VALUES (1, 'admin', 'admin', '110', '22@163.com', '2022-09-09 16:05:52', '123456', '1');
+INSERT INTO `student` VALUES (2, 'violetIII', '王浩', '18045291158', 'yangVioletIdasdaII@163.com', '2022-09-11 16:36:44', '123456', '0');
 
 -- ----------------------------
 -- Table structure for user
